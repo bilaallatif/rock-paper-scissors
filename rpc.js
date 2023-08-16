@@ -15,12 +15,10 @@ let desicion = (round) => {
 }
 
 let win_loss_counter = 0;
-let run_counter = 0;
+let playing = true;
 
 function play() {
-    if (run_counter > 5) {
-        return;
-    }
+    if (!playing) return;
     let playerSelection = weapon.indexOf(event.target.id);
     let computerSelection = getComputerChoice();
     let win_loss = round(computerSelection, playerSelection);
@@ -28,17 +26,15 @@ function play() {
     scoreboard.textContent = 'Score: ' + win_loss_counter;
     result.textContent = 'Result: ' + desicion(win_loss);
 
-    run_counter++;
-    if (run_counter == 5) {
-        if (win_loss_counter > 0) {
-            alert('You win the game!');
-        }
-        else if (win_loss_counter < 0) {
-            alert('You lose the game!');
-        }
-        else {
-            alert('Draw!');
-        }
+    if (win_loss_counter == 5) {
+        result.textContent = 'You Win the Game!';
+        result.style.backgroundColor = 'green';
+        playing = false;
+    }
+    else if (win_loss_counter == -5) {
+        result.textContent = 'You Lose the Game!';
+        result.style.backgroundColor = 'red';
+        playing = false;
     }
 };
 
