@@ -15,25 +15,38 @@ let desicion = (round) => {
 }
 
 let win_loss_counter = 0;
-for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt('Choose your weapon: Rock, Paper or Scissors?').toLowerCase();
+let run_counter = 0;
+
+function play() {
+    if (run_counter > 5) {
+        return;
+    }
+    let playerSelection = weapon.indexOf(event.target.id);
     let computerSelection = getComputerChoice();
-    console.log('Player: ' + playerSelection);
-    console.log('Computer: ' + weapon[computerSelection]);
-    let win_loss = round(computerSelection, weapon.indexOf(playerSelection));
-    console.log(desicion(win_loss));
-
+    let win_loss = round(computerSelection, playerSelection);
     win_loss_counter += win_loss;
-    console.log('Current score: ' + win_loss_counter);
-}
+    scoreboard.textContent = 'Score: ' + win_loss_counter;
+    result.textContent = 'Result: ' + desicion(win_loss);
 
-if (win_loss_counter > 0) {
-    console.log('You win the game!');
-}
-else if (win_loss_counter < 0) {
-    console.log('You lose the game!');
-}
-else {
-    console.log('Draw!');
-}
+    run_counter++;
+    if (run_counter == 5) {
+        if (win_loss_counter > 0) {
+            alert('You win the game!');
+        }
+        else if (win_loss_counter < 0) {
+            alert('You lose the game!');
+        }
+        else {
+            alert('Draw!');
+        }
+    }
+};
+
+let scoreboard = document.querySelector('#score');
+let result = document.querySelector('#result');
+let selectors = document.querySelectorAll('button');
+scoreboard.textContent = 'Score: 0';
+result.textContent = 'Result: N/A';
+
+selectors.forEach(element => {element.addEventListener('click', play)});
 
